@@ -7,6 +7,6 @@ import java.util.List;
 public interface CrudService<T,ID> {
     T save(T object);
     T findById(ID id);
-    List<T> findByAll();
+    List<T> findAll();
     void deleteById(ID id);
 }

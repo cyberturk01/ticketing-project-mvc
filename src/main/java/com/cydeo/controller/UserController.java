@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping("/update/{email}")
     public String editUser(@PathVariable("email") String email, Model model){
-        userService.update(userService.findById(email));
+
         model.addAttribute("user", userService.findById(email));
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("users", userService.findAll());
@@ -51,6 +51,14 @@ public class UserController {
     @PostMapping("/update")
     public String updateUser(UserDTO user){
         userService.update(user);
+
+        return "redirect:/user/create";
+    }
+
+    @GetMapping("/delete/{email}")
+    public String deleteUser(@PathVariable("email") String email){
+
+        userService.deleteById(email);
 
         return "redirect:/user/create";
     }

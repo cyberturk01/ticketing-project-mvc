@@ -6,8 +6,11 @@ import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/project")
@@ -23,7 +26,7 @@ public class ProjectController {
     }
 
     @GetMapping("/create")
-    public String createUser(Model model){
+    public String createProject(Model model){
         model.addAttribute("project", new ProjectDTO());
         model.addAttribute("projects", projectService.findAll());
         model.addAttribute("managers", userService.findManagers());
@@ -31,9 +34,28 @@ public class ProjectController {
         return "/project/create";
     }
     @PostMapping("/create")
-    public String createUser(ProjectDTO projectDTO){
+    public String createProject(ProjectDTO projectDTO){
 
         projectService.save(projectDTO);
+        return "redirect:/project/create";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProject(@PathVariable("id") String id){
+        projectService.deleteById(id);
+        return "redirect:/project/create";
+    }
+    @GetMapping("/update/{id}")
+    public String editProject(@PathVariable("id") String id, Model model){
+        model.addAttribute("project", projectService.findById(id));
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("managers", userService.findManagers());
+
+        return "/project/update";
+    }
+    @PostMapping("/update")
+    public String updateProject(ProjectDTO project){
+        projectService.update(project);
         return "redirect:/project/create";
     }
 }

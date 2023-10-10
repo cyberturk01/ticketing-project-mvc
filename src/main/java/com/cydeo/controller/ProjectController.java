@@ -58,4 +58,12 @@ public class ProjectController {
         projectService.update(project);
         return "redirect:/project/create";
     }
+
+    @GetMapping("/complete/{id}")
+    public String completeProject(@PathVariable("id") String id){
+
+        projectService.complete(projectService.findById(id));
+        return "redirect:/project/create";
+    }
+
 }

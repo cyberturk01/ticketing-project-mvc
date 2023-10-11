@@ -42,8 +42,23 @@ public class TaskController {
     }
 
     @GetMapping("/delete/{id}")
-    public String getTask(@PathVariable("id") String id) {
+    public String getTask(@PathVariable("id") Long id) {
         taskService.deleteById(id);
+        return "redirect:/task/create";
+    }
+
+    @GetMapping("/update/{id}")
+    public String editTask(@PathVariable("id") Long id,  Model model) {
+        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("employee", userService.findAll());
+        model.addAttribute("tasks", taskService.findAll());
+        return "/task/update";
+    }
+
+    @PostMapping("/update")
+    public String updateTask(TaskDTO taskDTO) {
+        taskService.update(taskDTO);
         return "redirect:/task/create";
     }
 }

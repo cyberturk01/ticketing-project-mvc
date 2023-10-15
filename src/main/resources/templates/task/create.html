@@ -52,7 +52,7 @@
                                                     <label>Assigned Employee</label>
                                                     <select name="assignedemployee" th:field="*{assignedEmployee}"  class="custom-select">
                                                         <option th:value="''" th:text="Select"></option>
-                                                        <option th:each="emp: ${employee}" th:text="${emp.firstName +'-'+ emp.lastName}" th:value="${emp.email}"></option>
+                                                        <option th:each="emp: ${employees}" th:text="${emp.firstName +'-'+ emp.lastName}" th:value="${emp.email}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -130,7 +130,7 @@
                                                 <td th:text="${task.taskSubject}"></td>
                                                 <td th:text="${task.assignedEmployee.firstName +' '+task.assignedEmployee.lastName}"></td>
                                                 <td th:text="${task.assignedDate}"></td>
-                                                <td th:text="${task.status}"></td>
+                                                <td th:text="${task.taskStatus}"></td>
                                                 <td class="actions">
                                                     <a th:href="@{/task/update/{id}(id=${task.id})}" class="btn btn-warning rounded-0">Update</a>
                                                     <a th:href="@{/task/delete/{id}(id=${task.id})}" class="btn btn-danger rounded-0">Delete</a>
